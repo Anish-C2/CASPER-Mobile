@@ -1,0 +1,88 @@
+:root{
+  --navy:#142443;
+  --gold:#b58c27;
+  --cream:#f3ead6;
+  --paper:#fffdf6;
+  --line:#b9a77d;
+  --soft:#d4c4a0;
+  --ink:#1b1710;
+  --muted:#6b6256;
+  --tab:72px;
+  --safe-b:env(safe-area-inset-bottom,0px);
+  --safe-t:env(safe-area-inset-top,0px);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--cream);color:var(--ink);font:15px/1.35 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+a{color:var(--navy);text-decoration:none}
+a:active{opacity:.7}
+button{font:inherit;background:none;border:0;color:inherit}
+#app{max-width:640px;margin:0 auto;padding:8px 10px calc(var(--tab) + var(--safe-b) + 16px)}
+.m-header{position:sticky;top:0;z-index:20;background:var(--navy);color:#fff;padding:calc(8px + var(--safe-t)) 10px 0;box-shadow:0 2px 8px rgba(0,0,0,.18)}
+.m-top{display:flex;align-items:center;gap:8px;padding-bottom:8px}
+.m-brand{display:flex;align-items:center;gap:8px;color:#fff;flex:1;min-width:0}
+.m-brand strong{display:block;font:700 18px/1 Georgia,serif;color:#f1df9e}
+.m-brand small{display:block;font-size:11px;color:#d9c78c;opacity:.9}
+.crest{width:36px;height:36px;display:grid;place-items:center;background:var(--navy);color:#f1df9e;border:2px solid var(--gold);font:700 14px Georgia,serif;flex:0 0 auto}
+.m-icon{width:40px;height:40px;font-size:20px;color:#f1df9e}
+.m-sports{display:flex;gap:6px;overflow-x:auto;padding:0 0 8px;-webkit-overflow-scrolling:touch}
+.m-sports a{flex:0 0 auto;border:1px solid #8c6f27;color:#f1df9e;padding:6px 12px;border-radius:999px;font-size:12px;font-weight:700}
+.m-sports a.on{background:#f1df9e;color:var(--navy);border-color:#f1df9e}
+.m-ticker{background:#0e1830;color:#f1df9e;font-size:11px;padding:6px 4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.m-search-bar{background:var(--paper);border-bottom:1px solid var(--line);padding:8px 10px}
+.m-search-bar input,.search{width:100%;border:1px solid var(--line);background:#fff;padding:10px 12px;font:15px inherit;border-radius:8px}
+.m-drawer{position:fixed;inset:0 auto 0 0;width:min(82vw,300px);background:var(--paper);z-index:40;padding:calc(12px + var(--safe-t)) 14px 20px;box-shadow:4px 0 24px rgba(0,0,0,.25);overflow:auto}
+.m-drawer[hidden],.m-scrim[hidden],.m-search-bar[hidden]{display:none}
+.m-scrim{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:30}
+.m-drawer-head{display:flex;justify-content:space-between;align-items:center;font-weight:700;color:var(--navy);margin-bottom:10px}
+.m-drawer-nav a{display:block;padding:12px 4px;border-bottom:1px solid #ead9b2;font-weight:600}
+.m-tabbar{position:fixed;left:0;right:0;bottom:0;z-index:25;display:grid;grid-template-columns:repeat(5,1fr);background:var(--navy);padding:6px 0 calc(6px + var(--safe-b));border-top:2px solid var(--gold)}
+.m-tabbar a{color:#d9c78c;text-align:center;font-size:11px;font-weight:700;padding:8px 2px}
+.m-tabbar a.active{color:#f1df9e}
+.card{background:var(--paper);border:1px solid var(--line);margin:0 0 10px;padding:10px}
+.card h2,.card h3{margin:0 0 8px;color:var(--navy)}
+.card h2{font:700 20px/1.2 Georgia,serif}
+.card h3{font:700 14px/1.2 inherit;background:#f1dfb7;margin:-10px -10px 10px;padding:8px 10px;border-bottom:1px solid var(--line)}
+.muted{color:var(--muted)}
+.tiny{font-size:12px}
+.hero{background:var(--navy);color:#fff;padding:14px;margin-bottom:10px}
+.hero h2{color:#f1df9e;margin:4px 0 6px;font:700 22px Georgia,serif}
+.hero p{margin:0;color:#f1eee6;font-size:13px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:10px}
+.stat{background:var(--paper);border:1px solid var(--line);padding:8px 6px;text-align:center}
+.stat b{display:block;font:700 20px Georgia,serif;color:var(--navy)}
+.stat span{font-size:10px;text-transform:uppercase;color:var(--muted)}
+.list-row,.match-card,.award-row{display:block;padding:10px 0;border-bottom:1px solid #ead9b2}
+.list-row:last-child,.match-card:last-child{border-bottom:0}
+.list-row .meta,.match-card .meta{display:flex;justify-content:space-between;gap:8px;font-size:12px;color:var(--muted)}
+.score{font:700 18px Consolas,monospace;color:var(--navy)}
+.chip{display:inline-block;border:1px solid var(--line);padding:2px 6px;font-size:10px;font-weight:700;text-transform:uppercase}
+.chip.futsal{background:#edf2f8}
+.chip.football{background:#eef4e9}
+.chip.cricket{background:#f5eedb}
+.table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -4px}
+table{width:100%;border-collapse:collapse;font-size:12px;min-width:420px}
+th,td{border:1px solid #cfc0a4;padding:6px 5px;text-align:left}
+th{background:#ead9b2;color:var(--navy);white-space:nowrap}
+tbody tr:nth-child(even) td{background:#fbf7ec}
+.rank-gold td{background:#f1df9e!important;font-weight:700}
+.profile-head{display:flex;gap:10px;align-items:flex-start}
+.mark{width:64px;height:64px;display:grid;place-items:center;background:var(--navy);color:#f1df9e;border:2px solid var(--gold);font:700 20px Georgia,serif;flex:0 0 auto}
+.kv{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:8px 0}
+.kv div{border:1px solid #ead9b2;padding:6px}
+.kv span{display:block;font-size:10px;color:var(--muted);text-transform:uppercase}
+.cabinet{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.trophy{border:1px solid var(--line);padding:8px;background:#f8f0df;font-size:12px}
+.trophy.gold{background:#f1df9e}
+.bar{display:grid;grid-template-columns:80px 1fr 28px;gap:6px;align-items:center;margin:6px 0;font-size:12px}
+.bar span:nth-child(2){height:8px;background:#ead9b2;position:relative}
+.bar i{position:absolute;left:0;top:0;bottom:0;background:var(--navy)}
+.m-foot{display:none}
+.filter-row{display:flex;gap:6px;overflow-x:auto;margin-bottom:8px}
+.filter-row button{flex:0 0 auto;border:1px solid var(--line);padding:6px 10px;background:var(--paper);font-weight:700;font-size:12px}
+.filter-row button.on{background:var(--navy);color:#fff}
+.empty{padding:18px 8px;text-align:center;color:var(--muted)}
+.err{background:#f8e8e8;border-color:#c98989;color:#5a2a2a}
+@media(min-width:720px){
+  body{font-size:16px}
+  .m-tabbar{max-width:640px;left:50%;transform:translateX(-50%)}
+}
