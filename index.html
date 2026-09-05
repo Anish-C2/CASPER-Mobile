@@ -3,10 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#142443">
+  <meta name="theme-color" content="#101b33">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <title>CASPER Mobile</title>
+  <meta name="description" content="CASPER mobile archive — competitions, clubs, players, sectors, rankings and records.">
+  <title>CASPER · Mobile Archive</title>
   <link rel="stylesheet" href="assets/css/mobile.css">
   <script>
     window.CASPER_PAGE = { mode: 'hub', sport: null };
@@ -20,59 +21,52 @@
   <header class="m-header">
     <div class="m-top">
       <button class="m-icon" id="menu-btn" aria-label="Open menu">☰</button>
-      <a class="m-brand" href="#home">
+      <a class="m-brand" href="#home" aria-label="CASPER home">
         <span class="crest">CA</span>
-        <span>
-          <strong>CASPER</strong>
-          <small id="header-sub">Archive</small>
-        </span>
+        <span class="brand-copy"><strong>CASPER</strong><small id="header-sub">Competition Archive</small></span>
       </a>
       <button class="m-icon" id="search-btn" aria-label="Search">⌕</button>
     </div>
     <div class="m-sports" id="sport-pills"></div>
-    <div class="m-ticker" id="ticker">Loading archive…</div>
+    <div class="m-ticker" id="ticker">Connecting to the live archive…</div>
   </header>
 
   <div class="m-search-bar" id="search-bar" hidden>
     <form id="search-form">
-      <input type="search" id="search-input" placeholder="Search player or club" autocomplete="off">
+      <input type="search" id="search-input" placeholder="Search players, clubs or competitions" autocomplete="off">
     </form>
   </div>
 
   <aside class="m-drawer" id="drawer" hidden>
-    <div class="m-drawer-head">
-      <span>Navigate</span>
-      <button class="m-icon" id="drawer-close" aria-label="Close">✕</button>
-    </div>
+    <div class="m-drawer-head"><span>CASPER</span><button class="m-icon" id="drawer-close" aria-label="Close">✕</button></div>
     <nav class="m-drawer-nav">
-      <a href="#home">Home</a>
-      <a href="#news">News</a>
-      <a href="#archive">Competitions</a>
-      <a href="#players">Players</a>
-      <a href="#teams">Clubs</a>
-      <a href="#awards">Awards</a>
-      <a href="#ranking">Ranking</a>
-      <a href="#records">Records</a>
-      <a href="#statistics">Statistics</a>
-      <a href="#about">About</a>
+      <a href="#home">Home <span>›</span></a>
+      <a href="#news">News <span>›</span></a>
+      <a href="#archive">Competitions <span>›</span></a>
+      <a href="#players">Players <span>›</span></a>
+      <a href="#teams">Clubs <span>›</span></a>
+      <a href="#awards">Awards <span>›</span></a>
+      <a href="#ranking">Ranking <span>›</span></a>
+      <a href="#records">Records <span>›</span></a>
+      <a href="#statistics">Statistics <span>›</span></a>
+      <a href="#about">About CASPER <span>›</span></a>
     </nav>
-    <p class="muted tiny"><a href="https://anish-c2.github.io/CASPER/" target="_blank" rel="noopener">Open desktop site</a></p>
+    <div class="drawer-foot"><a href="https://anish-c2.github.io/CASPER/" target="_blank" rel="noopener">Open full desktop archive ↗</a></div>
   </aside>
   <div class="m-scrim" id="scrim" hidden></div>
 
-  <main id="app">
-    <div class="card"><p class="muted">Opening the CASPER archive…</p></div>
-  </main>
+  <main id="app"><div class="card loading"><div class="spinner"></div><p>Opening the CASPER archive…</p></div></main>
 
   <nav class="m-tabbar">
-    <a href="#home" data-view="home">Home</a>
-    <a href="#archive" data-view="archive">Comps</a>
-    <a href="#players" data-view="players">Players</a>
-    <a href="#teams" data-view="teams">Clubs</a>
-    <a href="#ranking" data-view="ranking">Ranks</a>
+    <a href="#home" data-view="home"><span>⌂</span>Home</a>
+    <a href="#archive" data-view="archive"><span>▤</span>Comps</a>
+    <a href="#players" data-view="players"><span>♙</span>Players</a>
+    <a href="#teams" data-view="teams"><span>◇</span>Clubs</a>
+    <a href="#ranking" data-view="ranking"><span>↕</span>Ranks</a>
   </nav>
 
   <script src="https://cdn.jsdelivr.net/gh/Anish-C2/CASPER@main/assets/casper-core.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/Anish-C2/CASPER@main/api/v1/casper-api.js"></script>
   <script src="assets/js/helpers.js"></script>
   <script src="assets/js/views.js"></script>
   <script src="assets/js/boot.js"></script>
