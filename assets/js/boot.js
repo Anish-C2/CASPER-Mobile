@@ -7,7 +7,7 @@ function paintPills() {
   const cur = PAGE.mode === 'hub' ? 'hub' : PAGE.sport;
   const slot = document.getElementById('sport-pills');
   if (!slot) return;
-  slot.innerHTML = '<a href="#home" data-sport="hub"' + (cur === 'hub' ? ' class="on"' : '') + '>All</a>' +
+  slot.innerHTML = '<a href="#home" data-sport="hub"' + (cur === 'hub' ? ' class="on"' : '') + '>All sports</a>' +
     STATE.sportsCfg.sports.map(s => '<a href="#sport/' + s.id + '" data-sport="' + s.id + '"' + (cur === s.id ? ' class="on"' : '') + '>' + escapeHtml(s.name) + '</a>').join('');
 }
 function setActive(view) {
@@ -18,11 +18,7 @@ function route() {
   const hash = (location.hash || '#home').slice(1);
   const parts = hash.split('/');
   const view = parts[0], arg = parts.slice(1).join('/');
-  if (view === 'sport' && arg) {
-    setSport(arg);
-    location.hash = '#home';
-    return;
-  }
+  if (view === 'sport' && arg) { setSport(arg); location.hash = '#home'; return; }
   const tab = ['competition', 'player', 'team'].includes(view) ? (view === 'player' ? 'players' : view === 'team' ? 'teams' : 'archive') : view;
   setActive(tab);
   let html = '';
@@ -49,10 +45,7 @@ function closeDrawer() {
   document.getElementById('scrim').hidden = true;
 }
 function wireChrome() {
-  document.getElementById('menu-btn').onclick = () => {
-    document.getElementById('drawer').hidden = false;
-    document.getElementById('scrim').hidden = false;
-  };
+  document.getElementById('menu-btn').onclick = () => { document.getElementById('drawer').hidden = false; document.getElementById('scrim').hidden = false; };
   document.getElementById('drawer-close').onclick = closeDrawer;
   document.getElementById('scrim').onclick = closeDrawer;
   document.getElementById('search-btn').onclick = () => {
@@ -62,12 +55,14 @@ function wireChrome() {
   };
   document.getElementById('search-form').onsubmit = (e) => {
     e.preventDefault();
-    const q = document.getElementById('search-input').value.trim();
+    const q = document.getElementById('search-input').value.trim().toLowerCase();
     if (!q) return;
-    const pl = collectPlayers().find(p => p.name.toLowerCase() === q.toLowerCase()) || collectPlayers().find(p => p.name.toLowerCase().includes(q.toLowerCase()));
-    const tm = collectTeams().find(t => t.name.toLowerCase() === q.toLowerCase() || t.abbr.toLowerCase() === q.toLowerCase()) || collectTeams().find(t => t.name.toLowerCase().includes(q.toLowerCase()));
+    const pl = collectPlayers().find(p => p.name.toLowerCase() === q) || collectPlayers().find(p => p.name.toLowerCase().includes(q));
+    const tm = collectTeams().find(t => t.name.toLowerCase() === q || t.abbr.toLowerCase() === q) || collectTeams().find(t => t.name.toLowerCase().includes(q));
+    const comp = allTourneys().find(x => String(x.t.meta.e || '').toLowerCase().includes(q) || String(x.t.meta.id || '').toLowerCase() === q);
     if (pl) location.hash = '#player/' + encodeURIComponent(pl.name);
     else if (tm) location.hash = '#team/' + encodeURIComponent(tm.abbr);
+    else if (comp) location.hash = '#competition/' + encodeURIComponent(comp.t.meta.id);
     else location.hash = '#players';
   };
 }
@@ -77,24 +72,40 @@ async function boot() {
     STATE.sportsCfg = await fetchFirst('sports.json', true);
     STATE.misc = await fetchFirst('misc.json', true);
     STATE.registry = Object.assign({}, await fetchFirst('player-registry.json', true), STATE.config.playerRegistry || {});
+
+    // CASPER API v1.1 is the mobile site's live data contract. The legacy
+    // archive parser remains available for rich match/standings rendering.
+    STATE.api = null;
+    if (window.CASPER_API) {
+      try {
+        STATE.api = await CASPER_API.all({ season: STATE.config.defaultSeason || '2026A' });
+        STATE.apiSectors = await CASPER_API.sectors({});
+      } catch (e) {
+        console.warn('CASPER API snapshot unavailable; using archive fallback.', e);
+      }
+    }
+
     for (const cfg of STATE.sportsCfg.sports) {
       let files = [];
       try { files = await fetchFirst(cfg.manifest, true); } catch (e) { files = []; }
       const tours = [];
       for (const f of files) {
-        try { tours.push.apply(tours, parseCSN(await fetchFirst(cfg.dataDir + '/' + f, false))); } catch (e) {}
+        try { tours.push.apply(tours, parseCSN(await fetchFirst(cfg.dataDir + '/' + f, false))); } catch (e) { console.warn('Could not parse', f, e); }
       }
       STATE.sports[cfg.id] = buildSport(cfg, tours);
     }
+
     STATE.ready = true;
-    document.getElementById('header-sub').textContent = 'Live from desktop archive';
-    document.getElementById('ticker').textContent = generateNews().slice(0, 6).join('  \u00b7  ') || 'Archive loaded.';
+    const apiMatches = STATE.api && Array.isArray(STATE.api.matches) ? STATE.api.matches.length : 0;
+    const apiComps = STATE.api && Array.isArray(STATE.api.competitions) ? STATE.api.competitions.length : 0;
+    document.getElementById('header-sub').textContent = 'Live archive · ' + (STATE.config.defaultSeason || '2026A');
+    document.getElementById('ticker').textContent = apiComps + ' competitions · ' + apiMatches + ' matches · ' + ((STATE.apiSectors || []).length) + ' sectors · API v' + (window.CASPER_API ? CASPER_API.version : '—');
     paintPills();
     wireChrome();
     route();
     window.addEventListener('hashchange', route);
   } catch (err) {
-    document.getElementById('app').innerHTML = '<div class="card err"><h3>Could not load archive</h3><p>The mobile site reads data from the desktop CASPER repo. Check that GitHub Pages or raw files are reachable.</p><p class="tiny">' + escapeHtml(err && err.message ? err.message : String(err)) + '</p></div>';
+    document.getElementById('app').innerHTML = '<div class="card err"><h3>Could not load archive</h3><p>CASPER Mobile could not reach the public archive.</p><p class="tiny">' + escapeHtml(err && err.message ? err.message : String(err)) + '</p><button class="retry" onclick="location.reload()">Retry</button></div>';
   }
 }
 boot();
