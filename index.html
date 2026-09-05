@@ -8,6 +8,9 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="description" content="CASPER mobile archive — competitions, clubs, players, sectors, rankings and records.">
   <title>CASPER · Mobile Archive</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/mobile.css">
   <script>
     window.CASPER_PAGE = { mode: 'hub', sport: null };
@@ -21,54 +24,28 @@
   <header class="m-header">
     <div class="m-top">
       <button class="m-icon" id="menu-btn" aria-label="Open menu">☰</button>
-      <a class="m-brand" href="#home" aria-label="CASPER home">
-        <span class="crest">CA</span>
-        <span class="brand-copy"><strong>CASPER</strong><small id="header-sub">Competition Archive</small></span>
-      </a>
+      <a class="m-brand" href="#home" aria-label="CASPER home"><span class="crest">CA</span><span class="brand-copy"><strong>CASPER</strong><small id="header-sub">Competition Archive</small></span></a>
       <button class="m-icon" id="search-btn" aria-label="Search">⌕</button>
     </div>
     <div class="m-sports" id="sport-pills"></div>
     <div class="m-ticker" id="ticker">Connecting to the live archive…</div>
   </header>
-
-  <div class="m-search-bar" id="search-bar" hidden>
-    <form id="search-form">
-      <input type="search" id="search-input" placeholder="Search players, clubs or competitions" autocomplete="off">
-    </form>
-  </div>
-
+  <div class="m-search-bar" id="search-bar" hidden><form id="search-form"><input type="search" id="search-input" placeholder="Search players, clubs or competitions" autocomplete="off"></form></div>
   <aside class="m-drawer" id="drawer" hidden>
     <div class="m-drawer-head"><span>CASPER</span><button class="m-icon" id="drawer-close" aria-label="Close">✕</button></div>
     <nav class="m-drawer-nav">
-      <a href="#home">Home <span>›</span></a>
-      <a href="#news">News <span>›</span></a>
-      <a href="#archive">Competitions <span>›</span></a>
-      <a href="#players">Players <span>›</span></a>
-      <a href="#teams">Clubs <span>›</span></a>
-      <a href="#awards">Awards <span>›</span></a>
-      <a href="#ranking">Ranking <span>›</span></a>
-      <a href="#records">Records <span>›</span></a>
-      <a href="#statistics">Statistics <span>›</span></a>
-      <a href="#about">About CASPER <span>›</span></a>
+      <a href="#home">Home <span>›</span></a><a href="#news">News <span>›</span></a><a href="#archive">Competitions <span>›</span></a><a href="#players">Players <span>›</span></a><a href="#teams">Clubs <span>›</span></a><a href="#awards">Awards <span>›</span></a><a href="#ranking">Ranking <span>›</span></a><a href="#records">Records <span>›</span></a><a href="#statistics">Statistics <span>›</span></a><a href="#about">About CASPER <span>›</span></a>
     </nav>
     <div class="drawer-foot"><a href="https://anish-c2.github.io/CASPER/" target="_blank" rel="noopener">Open full desktop archive ↗</a></div>
   </aside>
   <div class="m-scrim" id="scrim" hidden></div>
-
   <main id="app"><div class="card loading"><div class="spinner"></div><p>Opening the CASPER archive…</p></div></main>
-
-  <nav class="m-tabbar">
-    <a href="#home" data-view="home"><span>⌂</span>Home</a>
-    <a href="#archive" data-view="archive"><span>▤</span>Comps</a>
-    <a href="#players" data-view="players"><span>♙</span>Players</a>
-    <a href="#teams" data-view="teams"><span>◇</span>Clubs</a>
-    <a href="#ranking" data-view="ranking"><span>↕</span>Ranks</a>
-  </nav>
-
+  <nav class="m-tabbar"><a href="#home" data-view="home"><span>⌂</span>Home</a><a href="#archive" data-view="archive"><span>▤</span>Comps</a><a href="#players" data-view="players"><span>♙</span>Players</a><a href="#teams" data-view="teams"><span>◇</span>Clubs</a><a href="#ranking" data-view="ranking"><span>↕</span>Ranks</a></nav>
   <script src="https://cdn.jsdelivr.net/gh/Anish-C2/CASPER@main/assets/casper-core.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/Anish-C2/CASPER@main/api/v1/casper-api.js"></script>
   <script src="assets/js/helpers.js"></script>
   <script src="assets/js/views.js"></script>
+  <script src="assets/js/mobile-patches.js"></script>
   <script src="assets/js/boot.js"></script>
 </body>
 </html>
